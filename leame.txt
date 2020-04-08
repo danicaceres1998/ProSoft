@@ -1,0 +1,15 @@
+# Author <<Juan Daniel Ojeda Caceres>>
+SISTEMA DE GESTION PARA SALONES DE BELLEZA - ProSoft
+
+--- Instrucciones para el usuario ProSoft ---
+
+- Para iniciar ProSoft se debe de ejecutar app.py que se encuentra al entrar en la carpeta de ProSoft
+
+Iniciada la ejecución se debe
+1-) Elegir las opciones que se desea
+2-) Iniciar sesión en la app, debe de ingresar su usuario(Solamente una contraseña que es: superadmin777 en nuestro caso)
+OBS: 
+    2.1-) Por ahora solamente funciona "ATENDER CLIENTE", "COBRAR CLIENTE"
+    2.2-) Cada vez que se accede a una acción principal se le pedirá el usuario al empleado
+
+3-)Posterior al login se pueden realizar todas las acciones que desee siguiendo siempre lo que pida ProSoft
