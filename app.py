@@ -1,6 +1,8 @@
-# Importamos las clases necesarias
-from Nucleo.software import Software # Va a hacer el papel de controlador
-from Vista.myview import ViewApp # Va a hacer el papel de Interaccion con el usuario
+### Importamos las clases necesarias ###
+# Va a hacer el papel de controlador
+from Nucleo.software import Software
+# Va a hacer el papel de Interaccion con el usuario
+from Vista.myview import ViewApp 
 from tkinter import messagebox
 
 ##### MAIN APP #####
