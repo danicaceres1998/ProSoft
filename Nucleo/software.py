@@ -24,7 +24,7 @@ class Software:
     __name__ = 'ProSoft'
     __author__ = 'Juan Daniel Ojeda'
     __license__ = 'Private Domain'
-    __version__ = '2.0'
+    __version__ = '1.0.0'
     __email__ = 'jdoc.298@gmail.com'
     __status__ = 'Prototype'
     # Numero Sucursal de la peluqueria
@@ -34,6 +34,7 @@ class Software:
     def __init__(self):
         self.peluquerias = []
         self.model = Model()
+        self.num_sucur = 0 # Numero de Sucursal por defecto
         pelu = self.model.devolver_peluqueria(self.NUM_SUCUR)
         self.asociar_peluqueria(pelu)
 

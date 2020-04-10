@@ -17,7 +17,7 @@ class Propina(Item):
     def colocar_total(self, monto):
         ''' Coloca el monto a la propina '''
         self.total = monto
-        self.fecha_consumision_cliente = datetime.now()
+        self.fecha_consumision_cliente = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def obtener_datos_item(self, condicion):
         ''' Obtiene los datos de la propina '''

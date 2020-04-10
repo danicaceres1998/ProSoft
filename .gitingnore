@@ -1,3 +1,6 @@
 .DS_Store
 .vscode
-Data.*
+__pycache__
+*/.DS_Store
+*/Data.*
+*/__pycache__/

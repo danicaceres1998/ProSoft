@@ -18,7 +18,7 @@ class Servicio(Item, metaclass = ABCMeta):
 
     def vender(self):
         ''' Accion de vender un Servicio '''
-        self.fecha_consumision_cliente = datetime.now()
+        self.fecha_consumision_cliente = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def get_precio(self):
         ''' Devuelve el precio unitario del servicio '''

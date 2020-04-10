@@ -1443,6 +1443,60 @@ class MyDialogPayEmp(tk.Toplevel):
         # Retornamos la lista con los datos
         return [self.tipo_ganacia, self.montos_entry]
 
+class MyDialogColocPropina(tk.Toplevel):
+    def __init__(self, root, **options):
+        # Metodo principal
+        super().__init__(root, **options)
+        self.geometry('570x420+400+150')
+        self.title('Ingreso de Codigos')
+        self.focus_force()
+        # Variables
+        self.list_final_datos = []
+        self.pos_cliente = None
+        self.list_cod_items = ['']
+        self.cuenta_cliente = tk.StringVar()
+        self.tipo_servicio = tk.StringVar()
+        # Etiquetas
+        label_info = MyLabel(self, text='Colocar Propina:')
+        label_info.config(fg='black', font=('Arial', 21, 'bold'))
+        label_info.grid(row=1, column=1)
+        label_ci_cliente = MyLabel(self, text='CI/RUC Cliente:')
+        label_ci_cliente.grid(row=2, column=1)
+        label_ci_empleado = MyLabel(self, text='CI/RUC Empleado:')
+        label_ci_empleado.grid(row=3, column=1)
+        label_monto_propina = MyLabel(self, text='Monto Propina:')
+        label_monto_propina.grid(row=4, column=1)
+        label_info2 = MyLabel(self, text='Empleados:')
+        label_info2.config(fg='black', font=('Arial', 18, 'bold'))
+        label_info2.grid(row=5, column=1)
+        
+        # Entradas
+        self.entry_ci_cliente = MyEntry(self, justify=tk.CENTER)
+        self.entry_ci_cliente.grid(row=2, column=2)
+        self.entry_ci_empleado = MyEntry(self, justify=tk.CENTER)
+        self.entry_ci_empleado.grid(row=3, column=2)
+        self.entry_monto_propina = MyEntry(self, justify=tk.CENTER)
+        self.entry_monto_propina.grid(row=4, column=2)
+        # Tablas
+        self.tabla_empleados = MyTable(self)
+        self.tabla_empleados.config(height=10)
+        ## Configuramos y cargamos la tabla ##
+        # Configuramos las columnas
+        self.tabla_empleados['columns'] = ('one', 'two')
+        self.tabla_empleados.column('#0', width=200, minwidth=200)
+        self.tabla_empleados.column('one', width=200, minwidth=200)
+        self.tabla_empleados.column('two', width=150, minwidth=150)
+        # Personalizamos los encabezados
+        self.tabla_empleados.heading('#0', text='Nombre', anchor=tk.W)
+        self.tabla_empleados.heading('one', text='Apellido', anchor=tk.W)
+        self.tabla_empleados.heading('two', text='CI/RUC', anchor=tk.W)
+        # Colocamos la tabla
+        self.tabla_empleados.place(x=7, y=150)
+        # Boton de Finalizacion
+        boton_agg_propina = MyBoton(self, text='Agregar Propina', command=self.destroy)
+        boton_agg_propina.config(font=('Times', 20))
+        boton_agg_propina.place(x=225, y=370)
+
 ## INTERFAZ GRAFICA ##
 class ViewApp(MyFrame):
     ''' Abstraccion de una interfaz GUI '''
@@ -1749,7 +1803,7 @@ class ViewApp(MyFrame):
             boton_abrir_cuenta.place(x=140, y=18)
             boton_cargar_cuenta = MyBoton(self.frame1, image=img_cargar_cuenta,text='Cargar Cuenta\nCliente', compound='top', command=lambda: cargar_cuenta(emp))
             boton_cargar_cuenta.place(x=260, y=18)
-            boton_crear_cliente = MyBoton(self.frame1, image=img_crear_cliente,text='\n  Crear Cliente  ', compound='top', command=lambda: crear_cliente(emp))
+            boton_crear_cliente = MyBoton(self.frame1, image=img_crear_cliente,text='\n  Crear Cliente  ', compound='top', command=lambda: self.crear_cliente(emp, reiniciar_frames))
             boton_crear_cliente.place(x=393, y=18)
             boton_crear_item = MyBoton(self.frame1, image=img_crear_item, text='\n   Crear Item   ', compound='top', command=lambda: crear_item(emp))
             boton_crear_item.place(x=530, y=18)
@@ -2017,6 +2071,9 @@ class ViewApp(MyFrame):
             # Esperamos a que se destruya el frame
             self.frame1.wait_window(sub_frame2)
 
+        def colocar_propina(emp):
+            pass
+
         # Funcion de salir
         def salir():
             ''' Funcion que sale del sub menu cobrar cliente '''
@@ -2069,20 +2126,26 @@ class ViewApp(MyFrame):
             img_anular_factura = self.get_image('./Vista/icons/anular.png')
             img_recargar_cuentas = self.get_image('./Vista/icons/recargar.png')
             img_arquear_caja = self.get_image('./Vista/icons/cajero.png')
+            img_agg_cliente = self.get_image('./Vista/icons/emp_agg.png')
+            img_coloc_propina = self.get_image('./Vista/icons/bitcoin.png')
             img_salir = self.get_image('./Vista/icons/logout.png')
 
             # Etiquetas
             self.mostrar_usuario(emp)
 
             # Botones
-            boton_cobrar_cliente = MyBoton(self.frame1, image=img_cobrar_cliente, text='   Cobrar   \n   Cliente   ', compound='top', command=lambda: cobrar_cliente(emp))
+            boton_cobrar_cliente = MyBoton(self.frame1, image=img_cobrar_cliente, text='    Cobrar    \n    Cliente   ', compound='top', command=lambda: cobrar_cliente(emp))
             boton_cobrar_cliente.place(x=140, y=18)
-            boton_anular_factura = MyBoton(self.frame1, image=img_anular_factura,text='    Anular   \n   Factura  ', compound='top', command=lambda: anular_factura(emp))
+            boton_anular_factura = MyBoton(self.frame1, image=img_anular_factura,text='     Anular   \n    Factura   ', compound='top', command=lambda: anular_factura(emp))
             boton_anular_factura.place(x=260, y=18)
             boton_recargar_tab_cuentas = MyBoton(self.frame1, image=img_recargar_cuentas,text='Recargar Tabla\n  de Cuentas ', compound='top', command=reiniciar_tabla_cuentas)
-            boton_recargar_tab_cuentas.place(x=380, y=18)
+            boton_recargar_tab_cuentas.place(x=378, y=18)
             boton_reporte_caja = MyBoton(self.frame1, image=img_arquear_caja, text='     Reporte    \n     Caja    ', compound='top', command=lambda: reporte_caja(emp))
-            boton_reporte_caja.place(x=530, y=18)
+            boton_reporte_caja.place(x=525, y=18)
+            boton_agregar_cliente = MyBoton(self.frame1, image=img_agg_cliente, text='    Agregar   \n    Cliente   ', compound='top', command=lambda: self.crear_cliente(emp, reiniciar_frames))
+            boton_agregar_cliente.place(x=660, y=18)
+            boton_colocar_propina = MyBoton(self.frame1, image=img_coloc_propina, text='    Colocar    \n    Propina    ', compound='top', command=lambda: colocar_propina(emp))
+            boton_colocar_propina.place(x=780, y=18)
             boton_salir = MyBoton(self.frame1, image=img_salir, text='\n      Salir     ', compound='top', command=lambda: salir())
             boton_salir.place(x=980, y=18)
 
@@ -2373,6 +2436,31 @@ class ViewApp(MyFrame):
         '''' Muestra informacion de ProSoft '''
         # Destruimos todas las opciones anteriores
         self.reiniciar_frame_sub_opciones()
+
+    ### FUNCIONES DE PARA MUCHOS SUBMENUS ###
+    def crear_cliente(self, emp, reiniciar_frames):
+        ''' Funcion que crea un Cliente '''
+        # Reinicamos los Sub Frames
+        reiniciar_frames()
+        # Desactivamos los botones secundarios
+        self.desac_botones_secundarios()
+        try:
+            # Pedimos los datos
+            list_datos_cl = MyDialogCreateClient(self.raiz).show_data()
+            # Le pasamos los datos al controlador
+            self.controlador.crear_cliente(emp, list_datos_cl)
+        except Exception as e:
+            # Activamos los botones secundarios
+            self.activ_botones_secundarios()
+            # Mostramos el error
+            self.imprimir_error(str(e))
+            self.frame1.focus_force()
+        else:
+            # Activamos los botones secundarios
+            self.activ_botones_secundarios()
+            # Avisamos que salio todo bien
+            self.imprimir_aviso('Se creo correctamente el nuevo Cliente')
+            self.frame1.focus_force()
 
     ## FUNCIONES PARA ACTIVAR/DESACTIVAR BOTONES PRINCIPALES Y SECUNDARIOS ##
     def activ_botones_principales(self):

@@ -115,7 +115,7 @@ class Empleado(metaclass = ABCMeta):
                 'TINTE' : 25,
                 'UÑAS': 26
             }
-            return switcher.get(argument, 2) # 2 Por que aplique keratina es = 0
+            return switcher.get(argument, 20) # 2 Por que aplique keratina es = 0
             
         # Metodo principal #
         # Validamos que tenga algun item
